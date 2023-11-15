@@ -1,0 +1,32 @@
+{% extends 'admin/base_site.html' %}
+{% load i18n %}
+
+{% block content %}
+  <h2>{% blocktrans with selected_matches.count as count %}Confirm Update for {{ count }} Matches{% endblocktrans %}</h2>
+  
+  <form method="post" action="{% url 'admin:execute_edit_attributes' %}">
+    {% csrf_token %}
+    
+    <label for="new_match_count">{% trans 'Select New Match Count' %}:</label>
+    <select name="new_match_count" id="new_match_count">
+      <option value="1">1</option>
+      <option value="3">3</option>
+      <option value="3">5</option>
+      <!-- Add more options as needed -->
+    </select>
+    
+    <ul>
+      {% for match in selected_matches %}
+        <!-- <li>{{ match.datetime }}</li> -->
+        <li>{{ match.datetime }}: 
+          {% for team in match.teams.all %}
+          {{ team.name }}
+          {% if not forloop.last %} vs {% endif %}
+          {% endfor %}
+        </li>
+      {% endfor %}
+    </ul>
+    
+    <input type="submit" value="{% trans 'Confirm Update' %}" />
+  </form>
+{% endblock %}

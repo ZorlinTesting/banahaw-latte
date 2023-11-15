@@ -1,0 +1,38 @@
+{% extends 'admin/base_site.html' %}
+{% load i18n %}
+
+{% block content %}
+  <h2>{% blocktrans %}Update Summary{% endblocktrans %}</h2>
+  
+  {% if success_updates %}
+    <div class="alert alert-success" role="alert">
+      <p>{% trans 'Updated the following matches successfully:' %}</p>
+      <ul>
+        <!-- {% for match in success_updates %}
+          <li>{{ match.datetime }}</li>
+        {% endfor %} -->
+        {% for match in success_updates %}
+        <li>{{ match.datetime }}: 
+            {% for team in match.teams.all %}
+            {{ team.name }}
+            {% if not forloop.last %} vs {% endif %}
+            {% endfor %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+  
+  {% if error_updates %}
+    <div class="alert alert-danger" role="alert">
+      <p>{% trans 'Failed to update the following matches:' %}</p>
+      <ul>
+        {% for match in error_updates %}
+          <li>{{ match.formatted_datetime }} - {{ match.display_info }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+  
+  <p><a href="{% url 'admin:match_bet_match_changelist' %}">{% trans 'Return to Matches' %}</a></p>
+{% endblock %}
