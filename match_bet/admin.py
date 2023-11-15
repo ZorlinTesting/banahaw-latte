@@ -102,8 +102,6 @@ class MatchAdmin(admin.ModelAdmin):
         error_updates = []
 
         # # Retrieve the new attribute values from the form input
-        # new_match_count = request.POST.get('new_match_count')
-        # Retrieve the new attribute value from the form input
         new_match_count = int(request.POST.get('new_match_count'))
 
         # Loop through the selected matches
@@ -133,7 +131,6 @@ class MatchAdmin(admin.ModelAdmin):
 
 
 class TeamAdmin(admin.ModelAdmin):
-    # inlines = [MatchInline, MatchInlineTeam2]
     inlines = [MatchTeamRelationInline]
 
     list_display = ('name', 'acronym', 'base_pr', 'current_pr', 'origin', 'seed')

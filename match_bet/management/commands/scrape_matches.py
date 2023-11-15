@@ -4,8 +4,6 @@ import json
 from datetime import datetime, timedelta, timezone
 from ...models import Match, Team, MatchTeamRelation
 from django.shortcuts import get_object_or_404
-
-from django.db import IntegrityError
 from django.core.management.base import BaseCommand
 
 # constants
